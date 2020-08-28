@@ -1,0 +1,32 @@
+Manager:
+    WelcomeScreen
+    MainScreen
+
+<WelcomeScreen>:
+    name: "Welcome"
+    FloatLayout:
+        Image:
+            size_hint: None, None
+            source: 'welcome-bg.jpg'
+            pos_hint: {'center': (.5, .5)}
+
+            taller: self.image_ratio > (root.width / root.height)
+
+            width: (root.height * self.image_ratio) if self.taller else root.width
+            height: (root.width / self.image_ratio)  if not self.taller else root.height
+            allow_stretch:True
+
+    FloatLayout:
+        Image:
+            source: 'title.png'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+            size:200,200            
+
+    FloatLayout:
+        Image:
+            size_hint: .45,.45
+            source: 'dev-names.png'
+            pos_hint: {'center_x': 0.7, 'center_y': 0.15}    
+
+<MainScreen>:
+    name: "main"            
