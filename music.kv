@@ -51,7 +51,7 @@ Manager:
             title: "Music App"
             anchor_title: "center"
             elevation: 10
-            left_action_items: [["arrow-left-bold", lambda x: app.welcome_page_return()]]
+           
             right_action_items: [["help-circle-outline", lambda x: app.help_dialog_box_for_downloader()]]
         Widget:
         
@@ -80,6 +80,7 @@ Manager:
         text: root.text3
         pos_hint: {"center_x": 0.5, "center_y": 0.6}
         icon_right: "music-note-sixteenth"
+        required: True
         error: root.error
         
     
@@ -87,6 +88,7 @@ Manager:
         text: "Download"
         pos_hint: {"center_x": 0.5, "center_y": 0.3}   
         on_release: 
-            root.get_name() 
-            root.get_file_path()
+            root.change_file_path()
+            root.download()
+            
       

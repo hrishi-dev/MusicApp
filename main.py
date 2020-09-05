@@ -8,8 +8,8 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivymd.uix.button import MDFlatButton, MDRectangleFlatButton, MDIconButton, MDFloatingActionButton
 from tkinter import filedialog
 import tkinter as tk
-from url_finder import *
-
+import os
+from spotdl.command_line.core import Spotdl
 
 root2 = tk.Tk()
 root2.withdraw()
@@ -46,13 +46,19 @@ class DownloaderScreen(Screen):
         self.text = f"{FolderName}"
     
     
-    def get_name(self):
+    def download(self):
         self.song_name = self.ids.SongName.text
-        get_youtube_link(self.song_name)
 
-    def get_file_path(self):
+        args = {
+            "no_encode": False,
+        }
+        spotdl_handler = Spotdl(args)
+        spotdl_handler.download_track(self.song_name)
+    def change_file_path(self):
         self.file_path = self.ids.FilePathTextField.text
-        print(self.file_path)
+        os.chdir(self.file_path)
+
+   
 class MusicApp(MDApp):    
     def build(self):
         self.theme_cls.theme_style = "Dark"
