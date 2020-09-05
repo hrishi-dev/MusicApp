@@ -35,23 +35,7 @@ class DownloaderScreen(Screen):
     downloadChoices = ""
     menu = ""
 
-    def create_drop_down(self):
-        self.downloadChoices = [{"text": "Video (Mp4 : 720p)"},
-                                {"text": "Video (Mp4: 144p)"},
-                                {"text": "Audio (Mp3: 720p)"}]
-        self.menu = MDDropdownMenu(
-            caller=self.ids.FormatButton,
-            items=self.downloadChoices,
-            width_mult=5,
-            callback=self.menu_callback,
-        )
-
-    def open_drop_down(self):
-        self.create_drop_down()
-        self.menu.open()
-
-    def menu_callback(self, instance):
-        self.text5 = instance.text
+   
     
     
     def OpenDirectory(self):

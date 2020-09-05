@@ -32,7 +32,17 @@ Manager:
 
 <DownloaderScreen>:
     name: "Downloader"            
-    
+    FloatLayout:
+        Image:
+            size_hint: None, None
+            source: 'main_screen_bg.jpg'
+            pos_hint: {'center': (.5, .5)}
+
+            taller: self.image_ratio > (root.width / root.height)
+
+            width: (root.height * self.image_ratio) if self.taller else root.width
+            height: (root.width / self.image_ratio)  if not self.taller else root.height
+            allow_stretch:True      
         
     BoxLayout:
         orientation: "vertical"
