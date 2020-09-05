@@ -13,7 +13,7 @@ def ask_site():
 
 def get_youtube_link(query):
 
-    query_part1 = input("Enter a song name: ")
+    query_part1 = query
     real_query = "youtube" + " " + query_part1
     youtube_base_url = "https://www.youtube.com/watch?"
     youtube_url_results = []
@@ -33,4 +33,4 @@ def get_spotify_link(query):
             spotify_url_results.append(url)
             print(url)
 
-ask_site()
+

@@ -81,6 +81,12 @@ Manager:
         pos_hint: {"center_x": 0.5, "center_y": 0.6}
         icon_right: "music-note-sixteenth"
         error: root.error
-        on_text: root.get_name()
+        
     
-    
+    MDRectangleFlatButton:
+        text: "Download"
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}   
+        on_release: 
+            root.get_name() 
+            root.get_file_path()
+      

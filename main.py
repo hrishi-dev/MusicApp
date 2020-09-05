@@ -4,10 +4,11 @@ from kivy.uix.screenmanager import FadeTransition
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.menu import MDDropdownMenu
 from kivy.properties import StringProperty, ObjectProperty
+from kivymd.uix.button import MDFlatButton, MDRectangleFlatButton, MDIconButton, MDFloatingActionButton
 from tkinter import filedialog
 import tkinter as tk
+from url_finder import *
 
 
 root2 = tk.Tk()
@@ -46,16 +47,34 @@ class DownloaderScreen(Screen):
     
     
     def get_name(self):
-        while True:
-            self.text3 = self.ids.SongName.text
-            return self.text3
+        self.song_name = self.ids.SongName.text
+        get_youtube_link(self.song_name)
 
+    def get_file_path(self):
+        self.file_path = self.ids.FilePathTextField.text
+        print(self.file_path)
 class MusicApp(MDApp):    
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.accent_palette = "Red"
         self.theme_cls.primary_palette = "Green"        
+    def help_dialog_box_for_downloader(self):
+            dialog_box_string = "1. Click on the Choose Your Location Button. A file system screen should pop-up\n\n" \
+                                "2. Choose the directory your video/song should be downloaded into\n\n" \
+                                "3. Enter the name your song or a youtube or spotify link\n\n" \
+                                "4. Click on the download button and Voila your video/song has been downloaded !\n\n" \
+                                "WARNINGS:\n\n" \
+                                "1. Please do not enter an invalid youtube link or url....\n\n" \
+                                "2. Please choose a name for your video or song that does not already exist in your " \
+                                "folder.\n\n" \
 
+            close_button = MDFlatButton(text="Close", text_color=self.theme_cls.primary_color, on_release=self.close_dialog)
+            self.dialog = MDDialog(title="INSTRUCTIONS:", text=dialog_box_string,
+                                size_hint=(0.7, 1), buttons=[close_button])
+            self.dialog.open()
+
+    def close_dialog(self, obj):
+        self.dialog.dismiss()
 class Manager(ScreenManager):
     pass
 
