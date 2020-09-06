@@ -10,9 +10,13 @@ from tkinter import filedialog
 import tkinter as tk
 import os
 from spotdl.command_line.core import Spotdl
+from kivy.core.window import Window
 
-root2 = tk.Tk()
-root2.withdraw()
+
+from kivymd.app import MDApp
+from kivymd.uix.filemanager import MDFileManager
+from kivymd.toast import toast
+
 
 FolderName = ""
 
@@ -35,15 +39,48 @@ class DownloaderScreen(Screen):
     error = False
     downloadChoices = ""
     menu = ""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Window.bind(on_keyboard=self.events)
+        self.manager_open = False
+        self.file_manager = MDFileManager(
+            exit_manager=self.exit_manager,
+            select_path=self.select_path,
+        
+        )
 
-   
+    
+
+    def file_manager_open(self):
+        self.file_manager.show('/')  # output manager to the screen
+        self.manager_open = True
+
+    def select_path(self, path):
+        '''It will be called when you click on the file name
+        or the catalog selection button.
+
+        :type path: str;
+        :param path: path to the selected directory or file;
+        '''
+
+        self.exit_manager()
+        self.ids.FilePathTextField.text = path
+
+    def exit_manager(self, *args):
+        '''Called when the user reaches the root of the directory tree.'''
+
+        self.manager_open = False
+        self.file_manager.close()
+
+    def events(self, instance, keyboard, keycode, text, modifiers):
+        '''Called when buttons are pressed on the mobile device.'''
+
+        if keyboard in (1001, 27):
+            if self.manager_open:
+                self.file_manager.back()
+        return True
     
     
-    def OpenDirectory(self):
-        global FolderName
-        FolderName = filedialog.askdirectory()
-        FolderName = str(FolderName)
-        self.text = f"{FolderName}"
     
     
     def download(self):
