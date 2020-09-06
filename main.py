@@ -4,17 +4,12 @@ from kivy.uix.screenmanager import FadeTransition
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivymd.uix.dialog import MDDialog
-from kivy.properties import StringProperty, ObjectProperty
-from kivymd.uix.button import MDFlatButton, MDRectangleFlatButton, MDIconButton, MDFloatingActionButton
-from tkinter import filedialog
-import tkinter as tk
+from kivy.properties import StringProperty
+from kivymd.uix.button import MDFlatButton
 import os
 import threading
 from spotdl.command_line.core import Spotdl
-from kivy.core.window import Window
 from threading import Thread
-
-from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast import toast
 
@@ -100,7 +95,7 @@ class DownloaderScreen(Screen):
         spotdl_handler.download_track(self.song_name)
         self.manager.transition = FadeTransition(duration=1.2)
         self.manager.current = "Downloader"   
-    
+        toast("Download complete")
     def change_file_path(self):
         self.file_path = self.ids.FilePathTextField.text
         os.chdir(self.file_path)
