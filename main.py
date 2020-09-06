@@ -16,7 +16,7 @@ from kivymd.toast import toast
 
 FolderName = ""
 
-Window.size = (300, 500)
+
 class DownloadingScreen(Screen):
     pass
 class WelcomeScreen(Screen):
