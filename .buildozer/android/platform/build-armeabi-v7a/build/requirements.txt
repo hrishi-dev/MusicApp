@@ -1,0 +1,4 @@
+certifi
+kivymd
+spotdl
+spotipy
