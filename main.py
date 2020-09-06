@@ -9,9 +9,10 @@ from kivymd.uix.button import MDFlatButton, MDRectangleFlatButton, MDIconButton,
 from tkinter import filedialog
 import tkinter as tk
 import os
+import threading
 from spotdl.command_line.core import Spotdl
 from kivy.core.window import Window
-
+from threading import Thread
 
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
@@ -21,7 +22,8 @@ from kivymd.toast import toast
 FolderName = ""
 
 Window.size = (300, 500)
-
+class DownloadingScreen(Screen):
+    pass
 class WelcomeScreen(Screen):
     def on_enter(self):
         Clock.schedule_once(self.change_screen,5)
@@ -64,7 +66,7 @@ class DownloaderScreen(Screen):
         '''
 
         self.exit_manager()
-        self.ids.FilePathTextField.text = path
+        self.ids.FilePathTextField.text = os.path.abspath(path)
 
     def exit_manager(self, *args):
         '''Called when the user reaches the root of the directory tree.'''
@@ -80,8 +82,13 @@ class DownloaderScreen(Screen):
                 self.file_manager.back()
         return True
     
-    
-    
+    def button_press(self):
+        self.manager.transition = FadeTransition(duration=1.2)
+        self.manager.current = "downloading"        
+        t = Thread(target=self.download)
+        t.daemon = True
+        t.start()
+     
     
     def download(self):
         self.song_name = self.ids.SongName.text
@@ -91,6 +98,9 @@ class DownloaderScreen(Screen):
         }
         spotdl_handler = Spotdl(args)
         spotdl_handler.download_track(self.song_name)
+        self.manager.transition = FadeTransition(duration=1.2)
+        self.manager.current = "Downloader"   
+    
     def change_file_path(self):
         self.file_path = self.ids.FilePathTextField.text
         os.chdir(self.file_path)
