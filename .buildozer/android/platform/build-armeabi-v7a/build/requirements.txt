@@ -1,1 +1,2 @@
 unicode-slugify
+unidecode
