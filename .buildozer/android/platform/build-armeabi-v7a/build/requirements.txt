@@ -1,2 +1,2 @@
-pytube
+pytube3
 unicode-slugify
