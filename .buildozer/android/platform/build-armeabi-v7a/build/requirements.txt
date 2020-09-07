@@ -1,1 +1,1 @@
-slugify
+unicode-slugify
